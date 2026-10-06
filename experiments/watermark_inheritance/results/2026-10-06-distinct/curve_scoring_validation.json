@@ -5,11 +5,11 @@
     1024
   ],
   "expected_checkpoints": 42,
-  "verified_utc": "2026-10-06T08:20:51.317990+00:00",
-  "checkpoints": 12,
-  "pair_scores": 120000,
-  "final_pair_decisions_per_detector": 96000,
-  "aggregate_tests": 48,
+  "verified_utc": "2026-10-06T08:35:01.535951+00:00",
+  "checkpoints": 15,
+  "pair_scores": 150000,
+  "final_pair_decisions_per_detector": 120000,
+  "aggregate_tests": 60,
   "checks": [
     "Single-pass exposure, checkpoint/model/config identity, and matched target/control prefixes",
     "Source/split/length alignment",
@@ -39,6 +39,11 @@
     },
     {
       "run": "run_00",
+      "checkpoint": "target_step2048",
+      "metrics_sha256": "13f3f840724fb417938005c5db85299d5722dfc08718899db8b0354e52a51a11"
+    },
+    {
+      "run": "run_00",
       "checkpoint": "target_step512",
       "metrics_sha256": "81565b8f5a04ccbf8c25082c54e67c62e4379b7f406a16f60ba4c3c655cb2a6b"
     },
@@ -59,6 +64,11 @@
     },
     {
       "run": "run_01",
+      "checkpoint": "target_step2048",
+      "metrics_sha256": "5c689be3bd68cfa14f788d6c91334b9a1fa059f02e34ff3687372c0e131cfbe6"
+    },
+    {
+      "run": "run_01",
       "checkpoint": "target_step512",
       "metrics_sha256": "aaa97340b696a4411576784a169acd5305203ccc7ad76507f545572b1cb1aaec"
     },
@@ -76,6 +86,11 @@
       "run": "run_02",
       "checkpoint": "target_step1024",
       "metrics_sha256": "ec71c15a9e3ed11ceac263635df407214f05443999feda12bcf7d4cef4263b9d"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "target_step2048",
+      "metrics_sha256": "5252b6605cbbe02e12d741611bed54815091a23dc94d0b2e43c22da68b32d091"
     },
     {
       "run": "run_02",
