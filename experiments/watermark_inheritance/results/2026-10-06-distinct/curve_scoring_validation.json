@@ -3,14 +3,15 @@
   "matched_steps": [
     512,
     1024,
-    2048
+    2048,
+    3125
   ],
   "expected_checkpoints": 42,
-  "verified_utc": "2026-10-06T08:48:34.539050+00:00",
-  "checkpoints": 18,
-  "pair_scores": 180000,
-  "final_pair_decisions_per_detector": 144000,
-  "aggregate_tests": 72,
+  "verified_utc": "2026-10-06T09:18:16.387878+00:00",
+  "checkpoints": 24,
+  "pair_scores": 240000,
+  "final_pair_decisions_per_detector": 192000,
+  "aggregate_tests": 96,
   "checks": [
     "Single-pass exposure, checkpoint/model/config identity, and matched target/control prefixes",
     "Source/split/length alignment",
@@ -18,9 +19,37 @@
     "Per-example z reconstruction and neutral scores",
     "All strict-threshold final decisions",
     "Counts, signed gaps, advantages and within-pair outcomes",
-    "Exact paired and aggregate p-values by independent finite binomial sums",
+    "Independent log-space paired and aggregate p-values; frozen subnormal rounding explicitly recorded",
     "Equal 100k aggregate budgets with both probes and keys",
     "Artifact and scorer hashes"
+  ],
+  "subnormal_log_p_recomputations": [
+    {
+      "run": "run_00",
+      "checkpoint": "target_step3125",
+      "test": "radioactivity",
+      "probe": "s",
+      "key": "correct",
+      "stored_log10_p": -318.8889596052506,
+      "recomputed_log10_p": -318.8889466044305,
+      "one_sided_stored_p": 1.29134e-319,
+      "one_sided_recomputed_p": 1.2914e-319,
+      "maximum_probability_roundoff": 5e-324,
+      "factor": 1
+    },
+    {
+      "run": "run_01",
+      "checkpoint": "target_step3125",
+      "test": "radioactivity",
+      "probe": "s",
+      "key": "correct",
+      "stored_log10_p": -322.0274617421629,
+      "recomputed_log10_p": -322.0375683749611,
+      "one_sided_stored_p": 9.4e-323,
+      "one_sided_recomputed_p": 9.4e-323,
+      "maximum_probability_roundoff": 5e-324,
+      "factor": 1
+    }
   ],
   "records": [
     {
@@ -32,6 +61,11 @@
       "run": "run_00",
       "checkpoint": "control_step2048",
       "metrics_sha256": "9d33ce0b665acb4321ebd26337ecffb3b6229e6b6349de0704fc2c1ebab53204"
+    },
+    {
+      "run": "run_00",
+      "checkpoint": "control_step3125",
+      "metrics_sha256": "c02561c2245a29fbf234c5e6ca793e21790f5ab25740b1ce02f77980fed7f09d"
     },
     {
       "run": "run_00",
@@ -50,6 +84,11 @@
     },
     {
       "run": "run_00",
+      "checkpoint": "target_step3125",
+      "metrics_sha256": "f0be94f0092f01f4f860924041eb4c10dcd456d2690db371835dda346c3a5753"
+    },
+    {
+      "run": "run_00",
       "checkpoint": "target_step512",
       "metrics_sha256": "81565b8f5a04ccbf8c25082c54e67c62e4379b7f406a16f60ba4c3c655cb2a6b"
     },
@@ -62,6 +101,11 @@
       "run": "run_01",
       "checkpoint": "control_step2048",
       "metrics_sha256": "fd53859ae3a6a42ecf303ee0e593aa6d9557535ffc045eec7542940921790d27"
+    },
+    {
+      "run": "run_01",
+      "checkpoint": "control_step3125",
+      "metrics_sha256": "dc56a2e021bea4a9fe472b81d2676a320951e9e1a104b58129d93b9a1ace2488"
     },
     {
       "run": "run_01",
@@ -80,6 +124,11 @@
     },
     {
       "run": "run_01",
+      "checkpoint": "target_step3125",
+      "metrics_sha256": "ca3138441ea6fd1c89d09762750f793af1374c3d73473ae055a06fd42cd15eff"
+    },
+    {
+      "run": "run_01",
       "checkpoint": "target_step512",
       "metrics_sha256": "aaa97340b696a4411576784a169acd5305203ccc7ad76507f545572b1cb1aaec"
     },
@@ -95,6 +144,11 @@
     },
     {
       "run": "run_02",
+      "checkpoint": "control_step3125",
+      "metrics_sha256": "29edd1180c98f278d3ccc5b7997d77dd44686b3f65df72e9ba9678a36a4442c9"
+    },
+    {
+      "run": "run_02",
       "checkpoint": "control_step512",
       "metrics_sha256": "4c132396188b9593db7c9066f31f45c64ae58bc39b6e7750be6709137b7b9c2e"
     },
@@ -107,6 +161,11 @@
       "run": "run_02",
       "checkpoint": "target_step2048",
       "metrics_sha256": "5252b6605cbbe02e12d741611bed54815091a23dc94d0b2e43c22da68b32d091"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "target_step3125",
+      "metrics_sha256": "97d764abc9dce7d8a42c027365a57c6f4bd95fadae13ebfe198a3e619a7357f5"
     },
     {
       "run": "run_02",
