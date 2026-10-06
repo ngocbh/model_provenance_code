@@ -9,6 +9,49 @@ from experiments.watermark_inheritance.train import _identity, _digest
 
 
 class CurveTests(unittest.TestCase):
+    def test_full_corpus_uses_only_first_exchange_and_checks_private_overlap(self):
+        from unittest.mock import patch
+        from experiments.watermark_inheritance import curve_prepare
+        from experiments.watermark_inheritance.prepare import CompletionIndex, normalize_text
+        from experiments.watermark_inheritance.tests.test_data import CharacterTokenizer
+        private = "An original private completion containing enough letters."
+        with patch.multiple(curve_prepare, CORPUS="full", TOKENIZER=CharacterTokenizer(),
+                            EXACT=CompletionIndex([private]), NORMALIZED=CompletionIndex([normalize_text(private)]), create=True):
+            status, encoded = curve_prepare.encode_row((7, {"id": "a", "data": ["Explain?", "Answer.", "Later?", private]}))
+            self.assertEqual(status, "eligible")
+            self.assertEqual(encoded["source_id"], "ultrachat_full:train:7:a")
+            self.assertEqual(encoded["response_tokens"], len("Answer.") + 1)
+            status, encoded = curve_prepare.encode_row((8, {"id": "b", "data": ["Explain?", private.upper()]}))
+            self.assertEqual(status, "normalized_overlap")
+            self.assertIsNone(encoded)
+
+    def test_single_pass_report_records_steps_and_configured_point_count(self):
+        from experiments.watermark_inheritance.common import write_json, load_json
+        from experiments.watermark_inheritance.curve_report import report
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            original, run = root / "original", root / "run_00"
+            def metrics(checkpoint, advantage):
+                return {"checkpoint": checkpoint, "pilot": False, "audit_pairs": 8000,
+                        "shard": {name: {"advantage": advantage, "signed_gap": advantage}
+                                  for name in ("watermark", "min_k20")},
+                        "radioactivity": [{"probe": "s_prime", "key": "correct", "log10_p_radio": -20.0}]}
+            for name, advantage in (("P", .7), ("B", .001)):
+                write_json(original / f"scores/{name}/metrics.json", metrics(name, advantage))
+            write_json(run / "config.json", {"parent_run_dir": str(original), "epochs": 1,
+                       "clean_rows": 600000, "effective_batch_size": 32, "checkpoint_steps": [512, 1024, 18750]})
+            for step, advantage in ((512, .5), (1024, .4)):
+                name = f"target_step{step}"
+                write_json(run / f"scores/{name}/metrics.json", metrics(name, advantage))
+                write_json(run / f"checkpoints/{name}/stage_state.json", {"stage": "target", "checkpoint_complete": True,
+                           "global_step": step, "examples_seen": step * 32, "unique_examples_seen": step * 32})
+            rows = report(root)
+            self.assertEqual([r["steps"] for r in rows if r["stage"] == "target"], [0, 512, 1024])
+            state = load_json(root / "reports/curve.json")
+            self.assertEqual(state["planned_nonbaseline_points"], 6)
+            self.assertEqual(state["completed_nonbaseline_points"], 2)
+            self.assertGreater((root / "reports/advantage_vs_steps.png").stat().st_size, 1000)
+
     def test_schedule_uses_optimizer_boundaries_and_includes_endpoint(self):
         self.assertEqual(checkpoint_schedule([2, 4], 4), [2, 4])
         for steps in ([0, 4], [2, 2, 4], [4, 2], [2, 5], [2]):
@@ -98,6 +141,8 @@ class CurveTests(unittest.TestCase):
             partial = train(runs[1], "target", "cpu", stop_after_step=2)
             self.assertFalse(partial["epoch_complete"])
             self.assertTrue(partial["checkpoint_complete"])
+            already_reached = train(runs[1], "target", "cpu", stop_after_step=2)
+            self.assertEqual(already_reached, partial)
             resumed = train(runs[1], "target", "cpu")
             for key in ("examples_seen", "response_tokens_seen", "input_tokens_seen", "loss_sum", "learning_rate"):
                 self.assertEqual(uninterrupted[key], resumed[key])

@@ -91,6 +91,8 @@ def train(run_dir, stage, device="cuda:0", stop_after_step=None):
     if previous and previous["complete"]:
         write_json(run_dir / f"training_{stage}.json", previous)
         return previous
+    if previous and stop_after_step is not None and previous["global_step"] >= stop_after_step:
+        return previous
     tokenizer = AutoTokenizer.from_pretrained(config["tokenizer_path"], local_files_only=True)
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
@@ -212,5 +214,6 @@ if __name__ == "__main__":
     parser.add_argument("--run-dir", required=True, type=Path)
     parser.add_argument("--stage", required=True, choices=["target", "control"])
     parser.add_argument("--device", default="cuda:0")
+    parser.add_argument("--stop-after-step", type=int, help="Yield after this durable checkpoint; resume preserves optimizer and RNG")
     args = parser.parse_args()
-    train(args.run_dir, args.stage, args.device)
+    train(args.run_dir, args.stage, args.device, args.stop_after_step)

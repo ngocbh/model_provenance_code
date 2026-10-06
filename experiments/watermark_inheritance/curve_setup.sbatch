@@ -11,4 +11,4 @@ set -euo pipefail
 cd "${SLURM_SUBMIT_DIR:?}"
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false PYTHONUNBUFFERED=1
 export HF_HOME="$PWD/.cache/watermark/hf"
-"$PWD/.venv/bin/python" -m experiments.watermark_inheritance.curve_prepare --workers 4
+"$PWD/.venv/bin/python" -m experiments.watermark_inheritance.curve_prepare --workers "${SLURM_CPUS_PER_TASK:-4}" "$@"

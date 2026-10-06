@@ -21,3 +21,33 @@ Implementation sequence (small independently checked changes):
 7. End-to-end verification: observe the first real checkpoint being scored while training advances beyond it; verify accounting, artifacts and recorded exposure. Monitor throughput and completion, report available curve honestly if the external deadline interrupts the planned trajectory.
 
 Data preparation can run while training/orchestration implementation proceeds. Code changes and launch are authorized by the user's request; no optional review or approval loop is needed.
+
+## Amendment: larger single pass
+
+The user prefers distinct examples and one epoch, permits a two-day GPU request,
+and requires a verified plot while training continues. Prepare a separate 600,000
+example corpus from the full `openbmb/UltraChat` training data, pinned to
+`f220fe796ce3ed62fbe1681b45ce6cbc9c6cabe0`. Keep one first user/assistant exchange
+per normalized instruction, also reject identical encoded training examples, and
+apply the same union-of-three-shards overlap filter. Use one epoch, preserving
+the original 18,750-step optimizer schedule and all seven checkpoint steps.
+The full source differs from the smaller H4-curated source; record this explicitly.
+
+Preserve the existing 200k run and let its audits supply an early plot. Once the
+new data and runnable source are ready, retain durable old checkpoints, stop only
+the superseded GPU allocation, and launch the fresh single-pass trajectories
+from the original parents/base controls using four H200s and a 48-hour limit.
+Already-submitted CPU audits keep running. Archive the supersession reason and
+exact last durable checkpoint for each old target; do not present the abandoned
+three-epoch trajectory as complete. Use separate artifacts under
+`artifacts/watermark_curve_distinct` and parameterize report titles/counts from
+the actual configs. Continue until a plot with multiple measured fine-tuning
+points is present and verified; label partial coverage while jobs continue.
+
+For the single-pass run, assign one GPU to each seed and alternate its target and
+matched control at checkpoint boundaries. Resume both trajectories with the same
+model, optimizer, scheduler, RNG and data position. Keep each seed on its original
+GPU to preserve CUDA RNG state. This supplies matched control curves early instead
+of waiting for the full target trajectory. The fourth GPU continues predictions
+asynchronously. The existing exact-resume integration test covers the yielding
+boundary, including an already-reached checkpoint being a no-op.

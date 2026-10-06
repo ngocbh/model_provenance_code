@@ -1,0 +1,16 @@
+{
+  "data_job": "28459929",
+  "gpu_job": "28460216",
+  "predecessor": "28458773",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--dependency=afterok:28459929,afterany:28458773",
+    "--time=48:00:00",
+    "--output=/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_curve_distinct/setup/logs/%x-%j.out",
+    "--error=/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_curve_distinct/setup/logs/%x-%j.err",
+    "experiments/watermark_inheritance/curve_gpu.sbatch",
+    "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_curve_distinct"
+  ],
+  "submitted_utc": "2026-10-06T06:57:26.901079+00:00"
+}

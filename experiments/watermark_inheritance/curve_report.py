@@ -33,9 +33,10 @@ def report(root):
     # Multiple CPU score jobs can finish together; serialize publication.
     with (output / ".report.lock").open("w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
-        rows = []
+        rows, configs = [], []
         for run in sorted(root.glob("run_*")):
             config = load_json(run / "config.json")
+            configs.append(config)
             original = Path(config["parent_run_dir"])
             for stage, baseline in (("target", "P"), ("control", "B")):
                 rows.append(point(load_json(original / f"scores/{baseline}/metrics.json"), {}, run.name, stage))
@@ -54,17 +55,18 @@ def report(root):
             writer.writeheader()
             writer.writerows(rows)
         temporary.replace(output / "curve.csv")
+        planned_points = sum(2 * len(config["checkpoint_steps"]) for config in configs)
         write_json(output / "curve.json", {"rows": rows, "completed_nonbaseline_points": sum(r["steps"] > 0 for r in rows),
-                   "planned_nonbaseline_points": 42,
+                   "planned_nonbaseline_points": planned_points,
                    "interpretation": "Repeated measurements on a fixed audit; intermediate points are descriptive. All prespecified points are retained."})
         import matplotlib
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
         figure, axes = plt.subplots(2, 2, figsize=(12, 8))
         specifications = [
-            ("examples_seen", "watermark_advantage", "Fine-tuning examples seen (includes repeats)", "Watermark shard advantage"),
+            ("steps", "watermark_advantage", "Fine-tuning optimizer steps", "Watermark shard advantage"),
             ("response_tokens_seen", "watermark_advantage", "Supervised response tokens seen", "Watermark shard advantage"),
-            ("examples_seen", "min_k20_advantage", "Fine-tuning examples seen (includes repeats)", "MIN-K 20% shard advantage"),
+            ("steps", "min_k20_advantage", "Fine-tuning optimizer steps", "MIN-K 20% shard advantage"),
             ("steps", "radio_correct_log10_p_radio", "Optimizer steps", "Correct-key S′ log10(p)")]
         colors = ["#2878b5", "#d47622", "#3c9563"]
         for axis, (x, y, xlabel, ylabel) in zip(axes.flat, specifications):
@@ -77,14 +79,39 @@ def report(root):
             axis.grid(alpha=.2)
             if "advantage" in y:
                 axis.set_ylim(0, 1)
+            axis.set_xlim(left=0, right=max(1, max(r[x] for r in rows)) * 1.03)
         axes[0, 0].legend(fontsize=8, ncol=2)
         count = sum(r["steps"] > 0 for r in rows)
-        figure.suptitle(f"Continuous clean fine-tuning on 200k UltraChat examples — {count}/42 audits complete")
+        config = configs[0]
+        epochs, distinct = config["epochs"], config["clean_rows"]
+        coverage = f"{distinct:,} distinct examples, {epochs} epoch" + ("s" if epochs != 1 else "")
+        figure.suptitle(f"Continuous clean fine-tuning: {coverage} — {count}/{planned_points} audits complete")
         figure.tight_layout()
         for extension in ("png", "pdf"):
             temporary = output / f"curve.tmp.{os.getpid()}.{extension}"
             figure.savefig(temporary, dpi=180)
             temporary.replace(output / f"curve.{extension}")
+        plt.close(figure)
+        # A dedicated artifact directly answers the requested advantage-vs-steps question.
+        figure, axis = plt.subplots(figsize=(8, 5))
+        for index, run_id in enumerate(sorted({r["run_id"] for r in rows})):
+            for stage, style in (("target", "-"), ("control", "--")):
+                selected = [r for r in rows if r["run_id"] == run_id and r["stage"] == stage]
+                axis.plot([r["steps"] for r in selected], [r["watermark_advantage"] for r in selected],
+                          style, marker="o", color=colors[index], label=f"{run_id} {stage}")
+        axis.set(xlabel="Fine-tuning optimizer steps", ylabel="Watermark shard advantage", ylim=(0, 1),
+                 xlim=(0, max(1, max(r["steps"] for r in rows)) * 1.03),
+                 title=f"{coverage}\n{count}/{planned_points} scheduled audits complete")
+        axis.grid(alpha=.2)
+        axis.legend(fontsize=8, ncol=2)
+        batch_size = config["effective_batch_size"]
+        secondary = axis.secondary_xaxis("top", functions=(lambda x: x * batch_size, lambda x: x / batch_size))
+        secondary.set_xlabel("Distinct fine-tuning examples seen" if epochs == 1 else "Fine-tuning examples seen (includes repeats)")
+        figure.tight_layout()
+        for extension in ("png", "pdf"):
+            temporary = output / f"advantage_vs_steps.tmp.{os.getpid()}.{extension}"
+            figure.savefig(temporary, dpi=180)
+            temporary.replace(output / f"advantage_vs_steps.{extension}")
         plt.close(figure)
         return rows
 

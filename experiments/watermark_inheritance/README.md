@@ -88,7 +88,26 @@ task-quality measurements.
 
 ## Continuous fine-tuning stress test
 
-The follow-up in `artifacts/watermark_curve` keeps the original three private
+The active single-pass extension uses `artifacts/watermark_curve_distinct`:
+600,000 distinct first-turn examples from the full `openbmb/UltraChat` train split,
+one epoch, and a 48-hour GPU allocation request. Its pinned source revision is
+`f220fe796ce3ed62fbe1681b45ce6cbc9c6cabe0`. Both normalized instructions and encoded
+training examples are deduplicated, and the same overlap exclusions apply.
+The full UltraChat source differs from the smaller H4-curated source below.
+The checkpoint schedule remains 512, 1024, 2048, 3125, 6250, 12500, and 18750 steps;
+all examples on this trajectory are seen once. Each seed stays on one GPU and
+alternates target/control at durable checkpoints, restoring the full optimizer,
+scheduler, RNG and data position. This yields matched control curves early.
+
+`reports/advantage_vs_steps.png` and `.pdf` are the dedicated requested plots,
+with optimizer steps on the bottom axis and example counts on the top axis.
+The CSV also records response-token exposure. Partial plots show their completed
+and planned audit counts; completed audits are published while training proceeds.
+The earlier 200k run is retained as a preliminary trajectory and superseded once
+the larger corpus and replacement allocation are ready. Its planned three-epoch
+endpoint must not be reported as completed if the run was stopped early.
+
+The initial follow-up in `artifacts/watermark_curve` keeps the original three private
 parents and audit pairs, and trains each parent plus a matched base-model control
 on the same 200,000 distinct UltraChat first-turn instruction/response examples.
 The corpus is pinned to revision `8049631c405ae6576f93f445c6b8166f76f5505a`, deduplicated

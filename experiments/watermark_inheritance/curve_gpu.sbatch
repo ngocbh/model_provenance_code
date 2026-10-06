@@ -13,7 +13,7 @@
 #SBATCH --error=artifacts/watermark_curve/setup/logs/%x-%j.err
 set -euo pipefail
 cd "${SLURM_SUBMIT_DIR:?}"
-curve_root="$PWD/artifacts/watermark_curve"
+curve_root="${1:-$PWD/artifacts/watermark_curve}"
 python_bin="$PWD/.venv/bin/python"
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false PYTHONUNBUFFERED=1
 export HF_HUB_OFFLINE=1 HF_DATASETS_OFFLINE=1

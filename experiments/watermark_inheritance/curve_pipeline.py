@@ -46,7 +46,6 @@ def pipeline(root, gpus):
     for relative, expected in source_manifest["files"].items():
         if file_sha256(Path.cwd() / relative) != expected:
             raise ValueError(f"Frozen source file changed: {relative}")
-    jobs = [(run, stage) for stage in ("target", "control") for run in runs]
     pending = [(run, stage, step) for run, config in zip(runs, configs)
                for stage in ("target", "control") for step in config["checkpoint_steps"]]
     stopped = threading.Event()
@@ -56,6 +55,7 @@ def pipeline(root, gpus):
     write_json(root / "setup/gpu_runtime.json", {"job_id": __import__("os").environ.get("SLURM_JOB_ID"),
                "started_utc": datetime.now(timezone.utc).isoformat(), "gpus": gpus,
                "training_workers": gpus - 1, "inference_device": gpus - 1,
+               "training_plan": "Each run stays on its assigned GPU; target and control alternate at every checkpoint, restoring optimizer/scheduler/RNG",
                "devices": [torch.cuda.get_device_name(i) for i in range(gpus)],
                "source_root": str(Path.cwd()), "source_manifest": source_manifest})
 
@@ -86,16 +86,20 @@ def pipeline(root, gpus):
             print(json.dumps({"event": "evaluation_error", "error": repr(error)}), flush=True)
 
     def worker(device):
-        # Thread-safe iterator; tasks are submitted before workers start.
-        while True:
-            with job_lock:
-                if not jobs:
-                    return
-                run, stage = jobs.pop(0)
-            run_command(command("curve_train", "--run-dir", run, "--stage", stage, "--device", f"cuda:{device}"),
-                        run / "logs" / f"train_{stage}.log")
+        # Fixed device assignment preserves the saved CUDA RNG stream. Alternating
+        # target/control gives matched early curves without waiting for an entire
+        # target trajectory to finish. Model/optimizer state resumes exactly.
+        assigned = list(zip(runs, configs))[device::gpus - 1]
+        steps = sorted({step for _, config in assigned for step in config["checkpoint_steps"]})
+        for step in steps:
+            for run, config in assigned:
+                if step not in config["checkpoint_steps"]:
+                    continue
+                for stage in ("target", "control"):
+                    run_command(command("curve_train", "--run-dir", run, "--stage", stage,
+                                        "--stop-after-step", step, "--device", f"cuda:{device}"),
+                                run / "logs" / f"train_{stage}.log")
 
-    job_lock = threading.Lock()
     evaluator = threading.Thread(target=evaluate, name="checkpoint-evaluation")
     evaluator.start()
     training_errors = []

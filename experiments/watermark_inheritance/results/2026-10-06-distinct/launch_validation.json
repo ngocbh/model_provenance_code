@@ -1,0 +1,17 @@
+{
+  "checked_utc": "2026-10-06T06:59:47.264681+00:00",
+  "data_job": "28459929",
+  "gpu_job": "28460216",
+  "gpu_walltime_hours": 48,
+  "data_request": {
+    "dataset": "openbmb/UltraChat",
+    "revision": "f220fe796ce3ed62fbe1681b45ce6cbc9c6cabe0",
+    "distinct_examples": 600000,
+    "epochs": 1
+  },
+  "unit_and_resume_and_reporting_tests": 6,
+  "checks_log": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_curve_distinct/setup/verification_v2.log",
+  "gpu_dependency": "afterok:28459929,afterany:28458773",
+  "gpu_cap": 4,
+  "status": "Data preparation running; replacement GPU job pending; previous training and audits preserved."
+}
