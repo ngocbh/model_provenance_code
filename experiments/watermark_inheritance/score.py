@@ -412,7 +412,7 @@ def score_predictions(pairs, predictions, tokenizer, config, output_dir, identit
         for score, field in (("watermark", "z"), ("min_k20", "min_k20"))}} for row in audit]
     write_jsonl(output_dir/"audit_decisions.jsonl", decisions)
     result = {"schema": SCHEMA, "run_id": config["run_id"], "checkpoint": checkpoint_name,
-              "pilot": pilot, "primary_comparison": checkpoint_name == "T" and not pilot,
+              "pilot": pilot, "primary_comparison": checkpoint_name == config.get("primary_checkpoint_name", "T") and not pilot,
               "prediction_identity": fingerprint(identity), "pairs": len(scored),
               "calibration_pairs": len(calibration), "audit_pairs": len(audit),
               "shard": shard, "radioactivity": radioactivity, "diagnostics": diagnostics,
@@ -427,7 +427,7 @@ def score_predictions(pairs, predictions, tokenizer, config, output_dir, identit
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-dir", required=True, type=Path)
-    parser.add_argument("--checkpoint-name", required=True, choices=["B", *CHECKPOINT_PATHS])
+    parser.add_argument("--checkpoint-name", required=True)
     parser.add_argument("--checkpoint-path", type=Path)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--limit", type=int, help="Pilot only; selected pairs are split-aware")
@@ -435,13 +435,20 @@ def main(argv=None):
     mode.add_argument("--predictions-only", action="store_true")
     mode.add_argument("--cpu-only", action="store_true")
     args = parser.parse_args(argv)
+    import re
+    if not re.fullmatch(r"[A-Za-z0-9_-]+", args.checkpoint_name):
+        parser.error("Checkpoint names must be simple directory-safe labels")
+    if args.checkpoint_name not in {"B", *CHECKPOINT_PATHS} and args.checkpoint_path is None:
+        parser.error("A custom checkpoint name requires --checkpoint-path")
     config = load_config(args.run_dir)
     pilot = args.limit is not None or bool(config.get("pilot", False))
     checkpoint_path = args.checkpoint_path or (Path(config["model_path"]) if args.checkpoint_name == "B"
                        else args.run_dir/"checkpoints"/CHECKPOINT_PATHS[args.checkpoint_name])
     if args.checkpoint_name != "B" and args.limit is None:
         state = load_json(checkpoint_path/"stage_state.json")
-        if not state.get("epoch_complete"):
+        interval_ready = (state.get("checkpoint_kind") == "continuous_clean_interval"
+                          and state.get("checkpoint_complete") and not state.get("pilot"))
+        if state.get("pilot") or (not state.get("epoch_complete") and not interval_ready):
             raise ValueError("An incomplete/pilot checkpoint cannot be used for a full audit")
     pairs_path = args.run_dir/"prepared"/"pairs.jsonl"
     pairs = read_jsonl(pairs_path)

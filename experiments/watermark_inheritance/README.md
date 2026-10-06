@@ -85,3 +85,37 @@ batch accumulation, teacher-forcing alignment, deduplication, calibrated
 thresholds and exact paired inference. Actual speed, memory use, training update
 and reload are measured by the GPU pilot. Training losses are not held-out
 task-quality measurements.
+
+## Continuous fine-tuning stress test
+
+The follow-up in `artifacts/watermark_curve` keeps the original three private
+parents and audit pairs, and trains each parent plus a matched base-model control
+on the same 200,000 distinct UltraChat first-turn instruction/response examples.
+The corpus is pinned to revision `8049631c405ae6576f93f445c6b8166f76f5505a`, deduplicated
+by normalized instruction, and filtered against S and S-prime from all three runs.
+This is a different-corpus stress test; it does not isolate the effect of increasing
+the number of Dolly examples.
+
+Each trajectory runs continuously for three epochs, with one optimizer and cosine
+schedule. Checkpoints at steps 512, 1024, 2048, 3125, 6250, 12500, and 18750 correspond
+to 16,384, 32,768, 65,536, 100,000, 200,000, 400,000, and 600,000 examples seen.
+Exposure above 200,000 includes repeats. Checkpoints record unique examples,
+optimizer steps, input tokens, and supervised response tokens. Interval resumes
+restore data position, optimizer, scheduler and RNG; a tiny-model integration test
+checks exact equality with uninterrupted training.
+
+Three GPU workers train the six trajectories, while a fourth GPU extracts audit
+predictions from atomically published checkpoints. Independent Slurm CPU jobs score
+those predictions and refresh `artifacts/watermark_curve/reports/curve.csv`,
+`curve.json`, `curve.png`, and `curve.pdf` while training continues. The report keeps
+every scheduled point, including controls, MIN-K, signed gaps and wrong-key results.
+Calibration stays separate from the fixed final audit; intermediate measurements
+are descriptive and are not independent confirmation tests. The final scheduled
+target checkpoint is the primary endpoint.
+
+Submission uses `curve_setup.sbatch`, followed by
+`python -m experiments.watermark_inheritance.curve_submit --data-job JOB_ID`.
+The submission tool freezes executable source under `setup/source` and records
+source hashes, the data-job dependency and the GPU job ID. GPU completion and CPU
+audit completion are recorded separately. The final CPU job verifies all 42 audits
+are present. See [the design](../../docs/plans/2026-10-06-finetuning-curve.md).

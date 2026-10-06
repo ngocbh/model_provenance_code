@@ -1,0 +1,15 @@
+{
+  "data_setup_job": "28458527",
+  "data_setup_state": "COMPLETED",
+  "gpu_job": "28458773",
+  "gpu_state_at_check": "RUNNING",
+  "distinct_examples": 200000,
+  "response_tokens_per_trajectory": 209271666,
+  "new_unit_and_resume_tests": 4,
+  "existing_scoring_tests": 16,
+  "existing_training_tests": 9,
+  "resume_check": "exact weight, loss, scheduler and exposure equality for uninterrupted versus mid-epoch resumed tiny GPT-NeoX training",
+  "source_manifest": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_curve/setup/source_manifest.json",
+  "tests_log": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_curve/setup/verification.log",
+  "planned_checkpoints": 42
+}

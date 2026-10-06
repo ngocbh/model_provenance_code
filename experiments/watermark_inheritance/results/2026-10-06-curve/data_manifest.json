@@ -1,0 +1,28 @@
+{
+  "dataset": "HuggingFaceH4/ultrachat_200k",
+  "revision": "8049631c405ae6576f93f445c6b8166f76f5505a",
+  "split": "train_sft",
+  "source_rows": 207865,
+  "selection_seed": 8675309,
+  "selection": "first user/assistant exchange; unique normalized instructions",
+  "format": "same response-only instruction format as original Dolly experiment",
+  "max_length": 1024,
+  "examined_rows": 200025,
+  "eligible_rows": 200000,
+  "response_truncated": 7691,
+  "instruction_truncated": 17879,
+  "context_truncated": 0,
+  "empty": 20,
+  "exact_overlap": 1,
+  "duplicate_instruction": 4,
+  "input_tokens_per_epoch": 104898268,
+  "response_tokens_per_epoch": 69757222,
+  "overlap_checked": true,
+  "overlap_policy": "exact and NFKC/casefold/whitespace normalized full-completion substrings; >=32 characters, otherwise original-field equality",
+  "pair_sha256": {
+    "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_inheritance/run_00/prepared/pairs.jsonl": "c7f13a590a51601de421ebf81c0af319e5fbfd53e6785c62579364573219c404",
+    "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_inheritance/run_01/prepared/pairs.jsonl": "0f52d6ee1170c5147fc85680a8ba1f136a21cda78ea6fb74a5f7f8c646cc8c75",
+    "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_inheritance/run_02/prepared/pairs.jsonl": "d4427cec69ebb1dbb03d5e8c74236bcba2c8b17ea270385ac0dd9ef97b330e4f"
+  },
+  "output_file_sha256": "ca3a1d952ed6b8ce2c8335fb048f5e6e743f8f767d2efb2f42d7d91d721a1d25"
+}

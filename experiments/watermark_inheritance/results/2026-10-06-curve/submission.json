@@ -1,0 +1,11 @@
+{
+  "data_job": "28458527",
+  "gpu_job": "28458773",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--dependency=afterok:28458527",
+    "experiments/watermark_inheritance/curve_gpu.sbatch"
+  ],
+  "submitted_utc": "2026-10-06T06:31:59.101219+00:00"
+}
