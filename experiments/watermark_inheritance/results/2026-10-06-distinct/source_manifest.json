@@ -13,7 +13,7 @@
     "experiments/watermark_inheritance/curve_score.sbatch": "dd84ca471dd4bace41be827860276773e199fef048474cdfd9a5749205e5c4ca",
     "experiments/watermark_inheritance/curve_setup.sbatch": "957b4be12e8217f9579ad61e772823c72b3ff4da0c5513965f4156f0d45dd0ba",
     "experiments/watermark_inheritance/curve_submit.py": "a0d0997e1cea8f823a3cc41626e97e8d6c0042bf6b8ad218a265b20a4d6faca9",
-    "experiments/watermark_inheritance/curve_train.py": "83f09881e7723f871d9ad9c5ad259ab1155f3785db88703506c36af793c6e5aa",
+    "experiments/watermark_inheritance/curve_train.py": "9356961f94e71e34d475e24a25ee40d77b85fc66fc077184bf7283edca6032a5",
     "experiments/watermark_inheritance/generate.py": "fcb6e8a3457047ad73a1d0ffac117d23090ff0e296cf407240fb8ccdb2d89023",
     "experiments/watermark_inheritance/gpu.sbatch": "b0f1d9d0c2a40e794ad4d1dac01e32e6b888f96d46d4b93f86b20ecbb9078126",
     "experiments/watermark_inheritance/pipeline.py": "4817b6f5b82a03ef38c07e5aff492d238d7af500fdd89f3d6af4c0b4eb755b64",
@@ -50,5 +50,10 @@
     "src/shard_audit/scoring/vit_scores.py": "99d70a885c01917fdc98a86bc6f95dd7562daa374576cc8b994a9cf2661f61d8"
   },
   "created_utc": "2026-10-06T06:57:26.565022+00:00",
-  "note": "Immutable runnable snapshot includes authorized uncommitted curve implementation"
+  "note": "Immutable runnable snapshot includes authorized uncommitted curve implementation",
+  "prelaunch_correction": {
+    "utc": "2026-10-06T07:20:56.388561+00:00",
+    "reason": "At the final requested yield point, write the canonical completion record before returning. Training and scoring unchanged. Regression reproduced then passed.",
+    "preserved_previous_version": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_curve_distinct/setup/prelaunch_revisions/final_marker_before_fix"
+  }
 }

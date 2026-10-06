@@ -1,0 +1,29 @@
+{
+  "dataset": "openbmb/UltraChat",
+  "revision": "f220fe796ce3ed62fbe1681b45ce6cbc9c6cabe0",
+  "split": "train",
+  "source_rows": 1468352,
+  "selection_seed": 8675309,
+  "selection": "first user/assistant exchange; unique normalized instructions and encoded training examples",
+  "format": "same response-only instruction format as original Dolly experiment",
+  "max_length": 1024,
+  "examined_rows": 600051,
+  "eligible_rows": 600000,
+  "response_truncated": 21027,
+  "instruction_truncated": 44512,
+  "context_truncated": 0,
+  "empty": 28,
+  "exact_overlap": 3,
+  "duplicate_instruction": 19,
+  "normalized_overlap": 1,
+  "input_tokens_per_epoch": 275567805,
+  "response_tokens_per_epoch": 199649506,
+  "overlap_checked": true,
+  "overlap_policy": "exact and NFKC/casefold/whitespace normalized full-completion substrings; >=32 characters, otherwise original-field equality",
+  "pair_sha256": {
+    "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_inheritance/run_00/prepared/pairs.jsonl": "c7f13a590a51601de421ebf81c0af319e5fbfd53e6785c62579364573219c404",
+    "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_inheritance/run_01/prepared/pairs.jsonl": "0f52d6ee1170c5147fc85680a8ba1f136a21cda78ea6fb74a5f7f8c646cc8c75",
+    "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_inheritance/run_02/prepared/pairs.jsonl": "d4427cec69ebb1dbb03d5e8c74236bcba2c8b17ea270385ac0dd9ef97b330e4f"
+  },
+  "output_file_sha256": "2d4e75a58b144dad0bf64df4f516f41eead3f683e26e581de1c649ba12fc68b0"
+}

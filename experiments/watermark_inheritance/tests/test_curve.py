@@ -143,7 +143,8 @@ class CurveTests(unittest.TestCase):
             self.assertTrue(partial["checkpoint_complete"])
             already_reached = train(runs[1], "target", "cpu", stop_after_step=2)
             self.assertEqual(already_reached, partial)
-            resumed = train(runs[1], "target", "cpu")
+            resumed = train(runs[1], "target", "cpu", stop_after_step=6)
+            self.assertTrue((runs[1] / "training_target.json").exists())
             for key in ("examples_seen", "response_tokens_seen", "input_tokens_seen", "loss_sum", "learning_rate"):
                 self.assertEqual(uninterrupted[key], resumed[key])
             self.assertEqual(resumed["examples_seen"], 10)

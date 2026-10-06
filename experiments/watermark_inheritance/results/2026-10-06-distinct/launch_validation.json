@@ -13,5 +13,10 @@
   "checks_log": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_curve_distinct/setup/verification_v2.log",
   "gpu_dependency": "afterok:28459929,afterany:28458773",
   "gpu_cap": 4,
-  "status": "Data preparation running; replacement GPU job pending; previous training and audits preserved."
+  "status": "Data preparation running; replacement GPU job pending; previous training and audits preserved.",
+  "final_checkpoint_regression": "reproduced missing final record, fixed and passed; exact resumed model weights still verified",
+  "data_validated": true,
+  "gpu_state": "RUNNING",
+  "old_gpu_state": "CANCELLED intentionally after retained 100k checkpoints",
+  "full_data_validation_job": "28461605"
 }

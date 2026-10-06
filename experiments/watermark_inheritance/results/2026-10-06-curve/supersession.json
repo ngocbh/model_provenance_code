@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-06T07:21:46.897052+00:00",
+  "reason": "Replace planned repeat passes with user-preferred 600000 distinct examples in one epoch. Preserve all early curve artifacts and independently running CPU audits.",
+  "superseded_gpu_job": "28458773",
+  "replacement_gpu_job": "28460216",
+  "retained": [
+    {
+      "run": "run_00",
+      "retained_checkpoint": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_curve/run_00/checkpoints/target_step3125",
+      "examples_seen": 100000,
+      "cpu_audit_job": "28461285"
+    },
+    {
+      "run": "run_01",
+      "retained_checkpoint": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_curve/run_01/checkpoints/target_step3125",
+      "examples_seen": 100000,
+      "cpu_audit_job": "28461293"
+    },
+    {
+      "run": "run_02",
+      "retained_checkpoint": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/artifacts/watermark_curve/run_02/checkpoints/target_step3125",
+      "examples_seen": 100000,
+      "cpu_audit_job": "28461283"
+    }
+  ],
+  "old_plan_complete": false
+}

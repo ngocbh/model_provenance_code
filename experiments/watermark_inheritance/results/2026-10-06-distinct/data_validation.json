@@ -1,0 +1,9 @@
+{
+  "eligible_rows": 600000,
+  "epochs": 1,
+  "max_steps": 18750,
+  "response_tokens": 199649506,
+  "sha256_verified": "2d4e75a58b144dad0bf64df4f516f41eead3f683e26e581de1c649ba12fc68b0",
+  "original_parents_verified": 3,
+  "unique_normalized_instructions_and_encodings_enforced": true
+}

@@ -203,7 +203,7 @@ def train(run_dir, stage, device="cuda:0", stop_after_step=None):
         write_json(run_dir / f"progress_{stage}.json", metadata)
         print(json.dumps({"event": "checkpoint_ready", "checkpoint": str(destination),
                           "save_seconds": time.monotonic() - save_start, **metadata}), flush=True)
-        if stop_after_step == global_step:
+        if stop_after_step == global_step and not complete:
             return metadata
     write_json(run_dir / f"training_{stage}.json", metadata)
     return metadata
