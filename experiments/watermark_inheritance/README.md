@@ -126,6 +126,15 @@ through that step. This checks matching example/token exposure as well as
 calibration membership, strict-threshold decisions and independently calculated
 paired and aggregate p-values. Full completion requires all 42 checkpoint audits.
 
+The frozen running scorer can lose log-p precision when SciPy returns a nonzero
+subnormal survival probability. The current scorer uses log-space summation in
+that range too. Original run artifacts remain unchanged: validation records
+independent log-p recomputations under `subnormal_log_p_recomputations`, accepting
+legacy rounding only within one binary64 subnormal quantum of the underlying
+one-sided probability. Larger discrepancies fail. This rounding affects two
+correct-key S aggregate p-values at the 100k target checkpoints; their pairwise
+advantages and the plotted S-prime statistics are unaffected.
+
 The initial follow-up in `artifacts/watermark_curve` keeps the original three private
 parents and audit pairs, and trains each parent plus a matched base-model control
 on the same 200,000 distinct UltraChat first-turn instruction/response examples.

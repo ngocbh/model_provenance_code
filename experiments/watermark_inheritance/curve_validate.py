@@ -2,6 +2,7 @@
 import hashlib
 import json
 import math
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -34,6 +35,27 @@ def close(actual, expected):
     assert math.isclose(actual, expected, rel_tol=1e-9, abs_tol=1e-9), (actual, expected)
 
 
+def verify_log10_probability(actual, expected, factor=1):
+    """Preserve and identify subnormal rounding from the frozen legacy scorer.
+
+    Its log(sf) may lose log precision because sf was already rounded. Accept
+    at most one binary64 subnormal quantum in the underlying one-sided tail;
+    return the independently recomputed log value for the validation record.
+    All other discrepancies still fail. New scorers avoid this path entirely.
+    """
+    if math.isclose(actual, expected, rel_tol=1e-9, abs_tol=1e-9):
+        return None
+    actual_tail = 10.0 ** (actual - math.log10(factor))
+    expected_tail = 10.0 ** (expected - math.log10(factor))
+    assert 0 < actual_tail < sys.float_info.min, (actual, expected)
+    assert 0 < expected_tail < sys.float_info.min, (actual, expected)
+    quantum = math.ulp(0.0)
+    assert abs(actual_tail - expected_tail) <= quantum, (actual, expected)
+    return {"stored_log10_p": actual, "recomputed_log10_p": expected,
+            "one_sided_stored_p": actual_tail, "one_sided_recomputed_p": expected_tail,
+            "maximum_probability_roundoff": quantum, "factor": factor}
+
+
 def binomial_log_sum(n, lo, hi, probability):
     k = np.arange(lo, hi + 1, dtype=np.float64)
     terms = (gammaln(n + 1) - gammaln(k + 1) - gammaln(n - k + 1)
@@ -45,6 +67,7 @@ def validate(root, require_matched_through=0):
     BASE = Path(root).resolve()
     exposures = {}
     records = []
+    subnormal_recomputations = []
     for run in sorted(BASE.glob("run_*")):
         config = read(run / "config.json")
         assert config == read(run / "config.lock.yaml")
@@ -153,7 +176,10 @@ def validate(root, require_matched_through=0):
                 assert result["positive_pairs"] == positives and result["negative_pairs"] == negatives
                 assert result["decision_ties"] == 8000 - discordant and result["raw_score_ties"] == raw_ties
                 logp = min(0.0, math.log(2) + binomial_log_sum(discordant, 0, min(positives, negatives), .5)) if discordant else 0.0
-                close(result["log10_p_shard"], logp / math.log(10))
+                rounding = verify_log10_probability(result["log10_p_shard"], logp / math.log(10), factor=2)
+                if rounding:
+                    subnormal_recomputations.append({"run": run.name, "checkpoint": folder.name,
+                                                     "test": "paired", "detector": detector, **rounding})
                 close(result["p_shard"], math.exp(logp))
             assert {(r["probe"], r["key"]) for r in metrics["radioactivity"]} == {
                 (p, k) for p in ("s", "s_prime") for k in ("correct", "wrong")}
@@ -162,7 +188,12 @@ def validate(root, require_matched_through=0):
                 assert n == 100000 and 0 <= g <= n
                 close(radio["green_rate"], g / n)
                 close(radio["gamma_exact"], gamma)
-                close(radio["log10_p_radio"], min(0.0, binomial_log_sum(n, g, n, gamma)) / math.log(10))
+                rounding = verify_log10_probability(
+                    radio["log10_p_radio"], min(0.0, binomial_log_sum(n, g, n, gamma)) / math.log(10))
+                if rounding:
+                    subnormal_recomputations.append({"run": run.name, "checkpoint": folder.name,
+                                                     "test": "radioactivity", "probe": radio["probe"],
+                                                     "key": radio["key"], **rounding})
             records.append({"run": run.name, "checkpoint": folder.name, "metrics_sha256": digest(path)})
 
     run_names = [run.name for run in sorted(BASE.glob("run_*"))]
@@ -187,8 +218,9 @@ def validate(root, require_matched_through=0):
               "checks": ["Single-pass exposure, checkpoint/model/config identity, and matched target/control prefixes", "Source/split/length alignment", "Frozen calibration membership and accuracy",
                          "Per-example z reconstruction and neutral scores", "All strict-threshold final decisions",
                          "Counts, signed gaps, advantages and within-pair outcomes",
-                         "Exact paired and aggregate p-values by independent finite binomial sums",
+                         "Independent log-space paired and aggregate p-values; frozen subnormal rounding explicitly recorded",
                          "Equal 100k aggregate budgets with both probes and keys", "Artifact and scorer hashes"],
+              "subnormal_log_p_recomputations": subnormal_recomputations,
               "records": records}
     (BASE / "setup/curve_scoring_validation.json").write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({k: v for k, v in result.items() if k != "records"}))

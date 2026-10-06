@@ -99,6 +99,15 @@ class StatisticalTests(unittest.TestCase):
         self.assertAlmostEqual(score.log10_binomial_survival(k, n, .25), expected, places=9)
         self.assertEqual(score.log10_binomial_survival(0, 0, .25), 0)
 
+    def test_subnormal_binomial_tail_keeps_log_precision(self):
+        # P[X=n] = p**n is analytic. These tails are nonzero binary64 values,
+        # but computing log(sf) has already lost significant digits.
+        for count in (600, 610, 615):
+            with self.subTest(count=count):
+                expected = count * math.log10(.3)
+                self.assertAlmostEqual(
+                    score.log10_binomial_survival(count, count, .3), expected, places=10)
+
     def test_mink_uses_completion_bottom_fifth(self):
         self.assertEqual(score.min_k_score([-9, -8, -1, -1, -1, -1, -1, -1, -1, -1]), -8.5)
         self.assertEqual(score.min_k_score([-4, -1]), -4)

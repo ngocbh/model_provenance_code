@@ -71,8 +71,8 @@ def min_k_score(log_probabilities, fraction=0.2):
 def log10_binomial_survival(green, count, probability):
     """log10 P[Binomial(count, probability) >= green], without a p-value floor.
 
-    scipy's survival function is accurate in its representable range.  For an
-    underflowing tail, sum exact log-PMF terms in bounded chunks using logsumexp.
+    scipy's survival function is accurate in the normal floating-point range.
+    For a subnormal or underflowing tail, sum log-PMF terms using logsumexp.
     This preserves e.g. log10(p)=-10000 instead of substituting a finite floor.
     """
     from scipy.special import gammaln, logsumexp
@@ -84,7 +84,7 @@ def log10_binomial_survival(green, count, probability):
     if green == 0:
         return 0.0
     log_tail = float(binom.logsf(green-1, count, probability))
-    if math.isfinite(log_tail):
+    if math.isfinite(log_tail) and log_tail >= math.log(np.finfo(np.float64).tiny):
         return log_tail / math.log(10)
     log_total = -math.inf
     constant = gammaln(count+1)
