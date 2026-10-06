@@ -1,0 +1,27 @@
+{
+  "input_file": "curve.json",
+  "input_sha256": "35e84af2a8b3fb62c1ccd0011bd875f8ca2de16d8ae1792b91366f946cde6e8f",
+  "run_ids": [
+    "run_00",
+    "run_01",
+    "run_02"
+  ],
+  "standard_deviation_ddof": 1,
+  "band": "Mean +/- one sample standard deviation across runs; not a confidence interval",
+  "included_steps": [
+    0,
+    512,
+    1024,
+    2048,
+    3125,
+    6250,
+    12500
+  ],
+  "excluded_incomplete_steps": [],
+  "files_sha256": {
+    "advantage_vs_steps_paper.pdf": "56f36f7ef83502478037ce7bd18968248b1238c6df50c78f6429ba94e393bc3d",
+    "advantage_vs_steps_paper.svg": "53fefe1f148980b22903815870497d22a5ab3567d6959bf46554101de7579922",
+    "advantage_vs_steps_paper.png": "293751eacc9f601c19ab1429b2560c602502701d2cbd07c62e214c9371832ed2",
+    "advantage_vs_steps_paper.csv": "da76cb93a0ae66d1a12177531b054aa89eb466a2a0b3c656537af7b7bc287fff"
+  }
+}

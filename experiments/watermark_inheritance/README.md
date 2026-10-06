@@ -107,6 +107,20 @@ The archived [advantage plot](results/2026-10-06-distinct/advantage_vs_steps.png
 [measurements](results/2026-10-06-distinct/curve.csv), and
 [snapshot coverage](results/2026-10-06-distinct/snapshot_manifest.json) contain the
 latest verified publication; the live artifacts may have additional measurements.
+
+The [paper figure](results/2026-10-06-distinct/advantage_vs_steps_paper.pdf) uses
+larger serif labels and two mean curves with shaded **±1 sample standard
+deviation** across the three runs (`ddof=1`). Only checkpoints complete for every
+target and control run are included. The plot has no title or progress notation.
+Vector PDF/SVG, a 600-dpi PNG, summary CSV, and input/output hashes are exported:
+
+```bash
+.venv/bin/python -m experiments.watermark_inheritance.paper_curve
+```
+
+Suggested caption: *Watermark advantage during clean fine-tuning. Lines show the
+mean and shaded bands indicate one standard deviation across three runs.*
+
 The earlier 200k run was stopped after all three targets reached 100,000 distinct
 examples and is retained as a preliminary trajectory. Its planned three-epoch
 endpoint was not reached, and its plotted controls are step-zero baselines only.
