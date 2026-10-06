@@ -1,0 +1,11 @@
+{
+  "rows": 600000,
+  "distinct_sources": 600000,
+  "distinct_normalized_instruction_hashes": 600000,
+  "distinct_actual_encoded_examples": 600000,
+  "input_tokens": 275567805,
+  "response_tokens": 199649506,
+  "data_sha256": "2d4e75a58b144dad0bf64df4f516f41eead3f683e26e581de1c649ba12fc68b0",
+  "response_masks_and_vocabulary_checked_for_every_row": true,
+  "validator_sha256": "e4bb8745a74a21e9a833518ac1c23fa7d1e1e3d95f1dbe08807befd18bc2ed3e"
+}

@@ -56,6 +56,11 @@ def report(root):
             writer.writerows(rows)
         temporary.replace(output / "curve.csv")
         planned_points = sum(2 * len(config["checkpoint_steps"]) for config in configs)
+        supersession_path = root / "setup/supersession.json"
+        supersession = load_json(supersession_path) if supersession_path.exists() else None
+        stopped = bool(supersession and Path(supersession["retained"][0]["retained_checkpoint"]).parents[2] == root)
+        if stopped:
+            planned_points = sum(len(list(run.glob("checkpoints/target_step*/stage_state.json"))) for run in root.glob("run_*"))
         write_json(output / "curve.json", {"rows": rows, "completed_nonbaseline_points": sum(r["steps"] > 0 for r in rows),
                    "planned_nonbaseline_points": planned_points,
                    "interpretation": "Repeated measurements on a fixed audit; intermediate points are descriptive. All prespecified points are retained."})
@@ -85,6 +90,9 @@ def report(root):
         config = configs[0]
         epochs, distinct = config["epochs"], config["clean_rows"]
         coverage = f"{distinct:,} distinct examples, {epochs} epoch" + ("s" if epochs != 1 else "")
+        if stopped:
+            retained = max(item["examples_seen"] for item in supersession["retained"])
+            coverage = f"Preliminary {distinct:,}-example corpus; stopped after {retained:,} examples"
         figure.suptitle(f"Continuous clean fine-tuning: {coverage} — {count}/{planned_points} audits complete")
         figure.tight_layout()
         for extension in ("png", "pdf"):
@@ -101,12 +109,12 @@ def report(root):
                           style, marker="o", color=colors[index], label=f"{run_id} {stage}")
         axis.set(xlabel="Fine-tuning optimizer steps", ylabel="Watermark shard advantage", ylim=(0, 1),
                  xlim=(0, max(1, max(r["steps"] for r in rows)) * 1.03),
-                 title=f"{coverage}\n{count}/{planned_points} scheduled audits complete")
+                 title=f"{coverage}\n{count}/{planned_points} {'saved-checkpoint' if stopped else 'scheduled'} audits complete")
         axis.grid(alpha=.2)
         axis.legend(fontsize=8, ncol=2)
         batch_size = config["effective_batch_size"]
         secondary = axis.secondary_xaxis("top", functions=(lambda x: x * batch_size, lambda x: x / batch_size))
-        secondary.set_xlabel("Distinct fine-tuning examples seen" if epochs == 1 else "Fine-tuning examples seen (includes repeats)")
+        secondary.set_xlabel("Distinct fine-tuning examples seen" if epochs == 1 or stopped else "Fine-tuning examples seen (includes repeats)")
         figure.tight_layout()
         for extension in ("png", "pdf"):
             temporary = output / f"advantage_vs_steps.tmp.{os.getpid()}.{extension}"

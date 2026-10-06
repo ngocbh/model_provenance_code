@@ -1,6 +1,6 @@
 {
-  "checked_utc": "2026-10-06T07:14:30.577745+00:00",
-  "completed_audits": 6,
+  "checked_utc": "2026-10-06T07:39:46.467277+00:00",
+  "completed_audits": 12,
   "checks": [
     {
       "run": "run_00",
@@ -15,6 +15,18 @@
       "metrics_sha256": "f9b4f7dcd33e69e682ad279e7e42eacb6a75f294c110ef208ffaed128c9d57b9"
     },
     {
+      "run": "run_00",
+      "checkpoint": "target_step2048",
+      "audit_decisions": 8000,
+      "metrics_sha256": "7c38f24cbdd17b91d0825011b4f08378c8fe7b7400f258e69251fa7ad1bfa869"
+    },
+    {
+      "run": "run_00",
+      "checkpoint": "target_step3125",
+      "audit_decisions": 8000,
+      "metrics_sha256": "64420cb289a920584127d370e000483ff786d667424070ce50e6515666a08dee"
+    },
+    {
       "run": "run_01",
       "checkpoint": "target_step512",
       "audit_decisions": 8000,
@@ -27,6 +39,18 @@
       "metrics_sha256": "c2cb2f835cd3b7dc9aa009c829d3c65122a236eb9cce5af06f749716b3c32944"
     },
     {
+      "run": "run_01",
+      "checkpoint": "target_step2048",
+      "audit_decisions": 8000,
+      "metrics_sha256": "5df1d92fba635495c84045bcbe84513dbf53cab071d45ae15bf34c4c6b098b48"
+    },
+    {
+      "run": "run_01",
+      "checkpoint": "target_step3125",
+      "audit_decisions": 8000,
+      "metrics_sha256": "079ef596a6beeac216afa82fbb3a0214756c1fbe96d0a68fa9b3fe4f3bde30b9"
+    },
+    {
       "run": "run_02",
       "checkpoint": "target_step512",
       "audit_decisions": 8000,
@@ -37,9 +61,83 @@
       "checkpoint": "target_step1024",
       "audit_decisions": 8000,
       "metrics_sha256": "dbaaf3615aaa6c870f6050db0f0ea7e14d2fbb69e4de0d228dd589a1d4af3ef2"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "target_step2048",
+      "audit_decisions": 8000,
+      "metrics_sha256": "e855379e997cb9b579c216b9c649222bee980e743c4f4461eee6e9ba700d079e"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "target_step3125",
+      "audit_decisions": 8000,
+      "metrics_sha256": "d21105c7cde6d5be29fe58715b2e15226446e11d31c517daef242812279ef5c5"
     }
   ],
-  "report_source_sha256": "a2492e5be744d4fcc59abd057d594526cfa4c605166e801b21e70c2313133d6f",
+  "cpu_accounting": [
+    [
+      "28459576",
+      "COMPLETED",
+      "0:0"
+    ],
+    [
+      "28459585",
+      "COMPLETED",
+      "0:0"
+    ],
+    [
+      "28459700",
+      "COMPLETED",
+      "0:0"
+    ],
+    [
+      "28459938",
+      "COMPLETED",
+      "0:0"
+    ],
+    [
+      "28460071",
+      "COMPLETED",
+      "0:0"
+    ],
+    [
+      "28460129",
+      "COMPLETED",
+      "0:0"
+    ],
+    [
+      "28460660",
+      "COMPLETED",
+      "0:0"
+    ],
+    [
+      "28460666",
+      "COMPLETED",
+      "0:0"
+    ],
+    [
+      "28460762",
+      "COMPLETED",
+      "0:0"
+    ],
+    [
+      "28461283",
+      "COMPLETED",
+      "0:0"
+    ],
+    [
+      "28461285",
+      "COMPLETED",
+      "0:0"
+    ],
+    [
+      "28461293",
+      "COMPLETED",
+      "0:0"
+    ]
+  ],
+  "report_source_sha256": "0340c5728145b3e900e687bfeeb103118200c3351f908ee627f945262b69c00c",
   "controls": "step-zero only in this preliminary plot",
-  "status": "partial; ongoing evaluation; not the final prespecified endpoint"
+  "status": "All 12 retained early checkpoints audited; original three-epoch endpoint intentionally not reached."
 }
