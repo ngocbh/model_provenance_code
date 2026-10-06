@@ -103,9 +103,28 @@ scheduler, RNG and data position. This yields matched control curves early.
 with optimizer steps on the bottom axis and example counts on the top axis.
 The CSV also records response-token exposure. Partial plots show their completed
 and planned audit counts; completed audits are published while training proceeds.
-The earlier 200k run is retained as a preliminary trajectory and superseded once
-the larger corpus and replacement allocation are ready. Its planned three-epoch
-endpoint must not be reported as completed if the run was stopped early.
+The archived [advantage plot](results/2026-10-06-distinct/advantage_vs_steps.png),
+[measurements](results/2026-10-06-distinct/curve.csv), and
+[snapshot coverage](results/2026-10-06-distinct/snapshot_manifest.json) contain the
+latest verified publication; the live artifacts may have additional measurements.
+The earlier 200k run was stopped after all three targets reached 100,000 distinct
+examples and is retained as a preliminary trajectory. Its planned three-epoch
+endpoint was not reached, and its plotted controls are step-zero baselines only.
+
+Verify the available single-pass audits independently from their saved pair
+scores and decisions:
+
+```bash
+.venv/bin/python -m experiments.watermark_inheritance.curve_validate \
+  --root artifacts/watermark_curve_distinct
+```
+
+The resulting `setup/curve_scoring_validation.json` records artifact hashes and
+the steps with all three target/control pairs complete. Add
+`--require-matched-through 1024`, for example, to require every scheduled point
+through that step. This checks matching example/token exposure as well as
+calibration membership, strict-threshold decisions and independently calculated
+paired and aggregate p-values. Full completion requires all 42 checkpoint audits.
 
 The initial follow-up in `artifacts/watermark_curve` keeps the original three private
 parents and audit pairs, and trains each parent plus a matched base-model control
@@ -115,7 +134,7 @@ by normalized instruction, and filtered against S and S-prime from all three run
 This is a different-corpus stress test; it does not isolate the effect of increasing
 the number of Dolly examples.
 
-Each trajectory runs continuously for three epochs, with one optimizer and cosine
+The initial plan called for three epochs, with one optimizer and cosine
 schedule. Checkpoints at steps 512, 1024, 2048, 3125, 6250, 12500, and 18750 correspond
 to 16,384, 32,768, 65,536, 100,000, 200,000, 400,000, and 600,000 examples seen.
 Exposure above 200,000 includes repeats. Checkpoints record unique examples,

@@ -1,0 +1,55 @@
+{
+  "complete": false,
+  "matched_steps": [
+    512
+  ],
+  "expected_checkpoints": 42,
+  "verified_utc": "2026-10-06T08:00:18.054591+00:00",
+  "checkpoints": 6,
+  "pair_scores": 60000,
+  "final_pair_decisions_per_detector": 48000,
+  "aggregate_tests": 24,
+  "checks": [
+    "Single-pass exposure, checkpoint/model/config identity, and matched target/control prefixes",
+    "Source/split/length alignment",
+    "Frozen calibration membership and accuracy",
+    "Per-example z reconstruction and neutral scores",
+    "All strict-threshold final decisions",
+    "Counts, signed gaps, advantages and within-pair outcomes",
+    "Exact paired and aggregate p-values by independent finite binomial sums",
+    "Equal 100k aggregate budgets with both probes and keys",
+    "Artifact and scorer hashes"
+  ],
+  "records": [
+    {
+      "run": "run_00",
+      "checkpoint": "control_step512",
+      "metrics_sha256": "69262d55572ea15b5ae556222c6bd62e8f8fd5b2cac72b9188a16342ff25262f"
+    },
+    {
+      "run": "run_00",
+      "checkpoint": "target_step512",
+      "metrics_sha256": "81565b8f5a04ccbf8c25082c54e67c62e4379b7f406a16f60ba4c3c655cb2a6b"
+    },
+    {
+      "run": "run_01",
+      "checkpoint": "control_step512",
+      "metrics_sha256": "0727b8575a08e282a8ed00016596a33792821d68bb7280922706b839f097fa65"
+    },
+    {
+      "run": "run_01",
+      "checkpoint": "target_step512",
+      "metrics_sha256": "aaa97340b696a4411576784a169acd5305203ccc7ad76507f545572b1cb1aaec"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "control_step512",
+      "metrics_sha256": "4c132396188b9593db7c9066f31f45c64ae58bc39b6e7750be6709137b7b9c2e"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "target_step512",
+      "metrics_sha256": "cae4ae0d3e9c12a6281237fd44f71fb29d50a4a4233bcbde1569017e18d243af"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "snapshot_utc": "2026-10-06T08:00:26.476803+00:00",
+  "gpu_job_id": "28460216",
+  "all_scheduled_audits_complete": false,
+  "completed_checkpoint_audits": 6,
+  "planned_checkpoint_audits": 42,
+  "matched_steps": [
+    512
+  ],
+  "files_sha256": {
+    "curve.csv": "db139ea0de4ae10f6ee927c9140b52e3f1bced2e40af66279448941d04ffc58c",
+    "curve.json": "73c15b6648911591841ffbe48fee6906b155c0fbf1ac59068f7006d391a51119",
+    "curve.png": "b717905ed852c3c4bd01c1d2cf8c20daae75bcc3c9398a13d2190f22b81fe2d4",
+    "curve.pdf": "21a8ef844205668adfd5533715b8897a03640d2f78c654af7483400d35fb5efd",
+    "advantage_vs_steps.png": "776ef19baf2de81570d81c9e614e583263991e1cfde61811eb4bf9a3ff1fd82b",
+    "advantage_vs_steps.pdf": "47c77a393555637cfe4c737032be445575ad19ba074c187e177bf0f1ff3e8383",
+    "curve_scoring_validation.json": "0871391a7a942c80f178050ca5f0ec1e95e5548fc7c5d7e9e3e298e2c7191678"
+  },
+  "checks": [
+    "CSV and JSON rows agree exactly",
+    "Every curve measurement equals its saved audit metric",
+    "Every nonbaseline metric hash appears in the independent validation",
+    "Report files copied while holding the shared publication lock"
+  ]
+}
