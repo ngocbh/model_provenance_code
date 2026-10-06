@@ -1,0 +1,17 @@
+{
+  "source_rows": 15011,
+  "response_truncated": 33,
+  "context_truncated": 173,
+  "instruction_truncated": 38,
+  "exact_overlap_excluded": 0,
+  "normalized_overlap_excluded": 0,
+  "eligible_rows": 15011,
+  "overlap_checked": true,
+  "overlap_excluded": 0,
+  "ignored_blank_completions": 15,
+  "overlap_policy": "exact/normalized completion substring for >=32 characters; shorter completions require whole original field equality",
+  "overlap_substring_min_chars": 32,
+  "pair_file_sha256": "c7f13a590a51601de421ebf81c0af319e5fbfd53e6785c62579364573219c404",
+  "output_file_sha256": "b6239e8e4fbdc94fb9966bdfeb29fd03ef02e8a8734bffb0aa7b1bd3ec5ecbb4",
+  "config_id": "604c6e4fbf582b47fd337db95fcc8355e7f1d23b6f979497a084158377fa43cb"
+}

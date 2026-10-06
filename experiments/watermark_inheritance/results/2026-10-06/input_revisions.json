@@ -1,0 +1,46 @@
+{
+  "model": {
+    "id": "EleutherAI/pythia-1b",
+    "revision": "f73d7dcc545c8bd326d8559c8ef84ffe92fea6b2",
+    "path": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/.cache/watermark/pythia-1b"
+  },
+  "datasets": {
+    "wikitext": {
+      "id": "Salesforce/wikitext",
+      "revision": "b08601e04326c79dfdd32d625aee71d232d685c3",
+      "config": "wikitext-103-raw-v1",
+      "split": "train",
+      "rows": 1801350,
+      "path": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/.cache/watermark/data/wikitext",
+      "fingerprint": "7dabb830ac9ebb0d"
+    },
+    "dolly": {
+      "id": "databricks/databricks-dolly-15k",
+      "revision": "bdd27f4d94b9c1f951818a7da7fd7aeea5dbff1a",
+      "config": null,
+      "split": "train",
+      "rows": 15011,
+      "path": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/.cache/watermark/data/dolly",
+      "fingerprint": "2537fb912ac88184"
+    }
+  },
+  "tokenizer": {
+    "id": "EleutherAI/pythia-1b",
+    "revision": "f73d7dcc545c8bd326d8559c8ef84ffe92fea6b2",
+    "path": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/.cache/watermark/pythia-1b"
+  },
+  "upstream": {
+    "path": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/.cache/watermark/radioactive-watermark",
+    "revision": "19c6dc90e7a0dddb1a241b73e7fae708b68f024e",
+    "url": "https://github.com/facebookresearch/radioactive-watermark"
+  },
+  "packages": {
+    "torch": "2.8.0",
+    "transformers": "4.57.1",
+    "datasets": "4.2.0",
+    "huggingface_hub": "0.36.2",
+    "tokenizers": "0.22.2",
+    "scipy": "1.16.3",
+    "numpy": "2.3.3"
+  }
+}

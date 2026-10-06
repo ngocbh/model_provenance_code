@@ -1,0 +1,85 @@
+[
+  {
+    "job_id": "28441611",
+    "cluster": "bouchet",
+    "stage": "setup",
+    "state": "COMPLETED",
+    "gpus": 0,
+    "exit_code": "0:0"
+  },
+  {
+    "job_id": "28447095",
+    "cluster": "bouchet",
+    "stage": "pilot",
+    "gpus": 2,
+    "gpu_type": "h200",
+    "account": "prio_zy286",
+    "partition": "priority_gpu",
+    "walltime": "01:00:00",
+    "state": "FAILED",
+    "node": "a1124u11n01",
+    "start_time_utc": "2026-10-06T01:53:31Z",
+    "exit_code": "1:0",
+    "reason": "Integrity check rejected generated untracked __pycache__; tracked sources were clean. Fixed."
+  },
+  {
+    "job_id": "28447333",
+    "stage": "pilot",
+    "gpus": 2,
+    "gpu_type": "h200",
+    "state": "COMPLETED",
+    "cluster": "bouchet",
+    "exit_code": "0:0",
+    "elapsed": "00:02:58"
+  },
+  {
+    "job_id": "28447450",
+    "stage": "main_gpu",
+    "gpus": 2,
+    "gpu_type": "h200",
+    "state": "COMPLETED",
+    "dependency": null,
+    "walltime": "08:00:00",
+    "cluster": "bouchet",
+    "cpus": 8,
+    "mem_gb": 96,
+    "resource_change": "Resized pending allocation in place to keep job age and downstream dependencies",
+    "node": "a1124u11n01",
+    "start_time_utc": "2026-10-06T02:07:31Z",
+    "exit_code": "0:0",
+    "elapsed": "01:58:04",
+    "end_time_utc": "2026-10-06T04:05:35Z"
+  },
+  {
+    "job_id": "28447457",
+    "stage": "cpu_scoring",
+    "gpus": 0,
+    "state": "COMPLETED",
+    "dependency": "afterok:28447450",
+    "array": "0-17%18",
+    "cluster": "bouchet",
+    "dependency_policy": "Individual successful prediction passes released early; remaining tasks released automatically after GPU success.",
+    "resource_override_manifests": [
+      "scoring_concurrency.json",
+      "scoring_cpu_selection.json",
+      "scoring_time_limit.json",
+      "scoring_memory.json"
+    ],
+    "tasks_completed": 18,
+    "exit_code": "0:0"
+  },
+  {
+    "job_id": "28447461",
+    "stage": "report",
+    "cluster": "bouchet",
+    "dependency": "afterok:28447457",
+    "gpus": 0,
+    "state": "COMPLETED",
+    "walltime": "00:05:00",
+    "mem_gb": 2,
+    "resource_change": "Report only loads small metric JSON files and plots; reduced pending reservation to improve scheduling.",
+    "exit_code": "0:0",
+    "elapsed": "00:00:29",
+    "postprocessing": "Plots regenerated after visual inspection; see reporting_revision.json."
+  }
+]

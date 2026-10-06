@@ -1,0 +1,18 @@
+{
+  "validated_at": "2026-10-06T03:01:33.991280+00:00",
+  "pairs": 10000,
+  "splits": {
+    "audit": 8000,
+    "calibration": 2000
+  },
+  "unique_sources": 10000,
+  "unique_articles": 10000,
+  "unique_prompts": 10000,
+  "unique_draw_seeds": 20000,
+  "pilot_article_overlap": 0,
+  "identical_pairs": 9,
+  "completion_tokens": 4840223,
+  "mean_completion_tokens": 242.01115,
+  "pairs_sha256": "d4427cec69ebb1dbb03d5e8c74236bcba2c8b17ea270385ac0dd9ef97b330e4f",
+  "token_ids_and_eos_valid": true
+}

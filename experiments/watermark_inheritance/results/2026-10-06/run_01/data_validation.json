@@ -1,0 +1,16 @@
+{
+  "verified_utc": "2026-10-06T02:42:36.600676+00:00",
+  "pairs": 10000,
+  "splits": {
+    "audit": 8000,
+    "calibration": 2000
+  },
+  "unique_sources": 10000,
+  "unique_prompts": 10000,
+  "pilot_source_overlap": 0,
+  "distinct_sampling_seeds": 20000,
+  "identical_pairs": 2,
+  "completion_tokens": 4854042,
+  "mean_completion_tokens": 242.7021,
+  "pairs_sha256": "0f52d6ee1170c5147fc85680a8ba1f136a21cda78ea6fb74a5f7f8c646cc8c75"
+}

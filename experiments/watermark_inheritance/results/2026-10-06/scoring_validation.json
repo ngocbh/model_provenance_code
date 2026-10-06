@@ -1,0 +1,110 @@
+{
+  "complete": true,
+  "verified_utc": "2026-10-06T04:25:26.861048+00:00",
+  "checkpoints": 18,
+  "pair_scores": 180000,
+  "final_pair_decisions_per_detector": 144000,
+  "aggregate_tests": 72,
+  "checks": [
+    "Source/split/length alignment",
+    "Frozen calibration membership and accuracy",
+    "Per-example z reconstruction and neutral scores",
+    "All strict-threshold final decisions",
+    "Counts, signed gaps, advantages and within-pair outcomes",
+    "Exact paired and aggregate p-values by independent finite binomial sums",
+    "Equal 100k aggregate budgets with both probes and keys",
+    "Artifact and scorer hashes"
+  ],
+  "records": [
+    {
+      "run": "run_00",
+      "checkpoint": "B",
+      "metrics_sha256": "611fad4cfd12c7db7e8fc44f2803440ac5fc966ce0d32a86167d0207d94d90a1"
+    },
+    {
+      "run": "run_00",
+      "checkpoint": "P",
+      "metrics_sha256": "6a6d0e1c13a582091ca2833e64c384b3fe0c59d21745976906b2b734fa759b5d"
+    },
+    {
+      "run": "run_00",
+      "checkpoint": "T",
+      "metrics_sha256": "bc289716f2dc9998dcc0d738bfba71ac77311b668416c21395e8131df9bc6b8d"
+    },
+    {
+      "run": "run_00",
+      "checkpoint": "T0",
+      "metrics_sha256": "2cfe56d7086b9a13f56c1b5be5a89289b228500a0e0a530dd3074a8867ef650d"
+    },
+    {
+      "run": "run_00",
+      "checkpoint": "T1",
+      "metrics_sha256": "f3e695eef820471da2ec2323f8afee8e1a183e3f3c79c5b03aa514226cb98059"
+    },
+    {
+      "run": "run_00",
+      "checkpoint": "T2",
+      "metrics_sha256": "8f14c9b1c4641fb9fba1888cfbadc0d98ff6b413738a01521a15c13a031a9196"
+    },
+    {
+      "run": "run_01",
+      "checkpoint": "B",
+      "metrics_sha256": "52da7da0566ce84e38dda8d09426cb770ac6f63523e4e9cd86631849cca4e536"
+    },
+    {
+      "run": "run_01",
+      "checkpoint": "P",
+      "metrics_sha256": "a91ca735fce77d2f4cd8f0bdcea66403208645fc0125814318668a691ae43d8f"
+    },
+    {
+      "run": "run_01",
+      "checkpoint": "T",
+      "metrics_sha256": "2442d338d687e1b01d05b0a19c7b23e046809d417be528a71f8edcaf9fdf6e30"
+    },
+    {
+      "run": "run_01",
+      "checkpoint": "T0",
+      "metrics_sha256": "1eb2349ba5ce25ab63df25c7bd3a8c7e6f8b4658fe6cc8df59b278fcba91c27b"
+    },
+    {
+      "run": "run_01",
+      "checkpoint": "T1",
+      "metrics_sha256": "919583699aeb6f315084744427d6f28a92c082a30470a8d92ba0306cbba5d586"
+    },
+    {
+      "run": "run_01",
+      "checkpoint": "T2",
+      "metrics_sha256": "aa4e238e87e85f13ed2d470d51e1b5e061bb3056294614c5bae50906bd8ef462"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "B",
+      "metrics_sha256": "6503c3007fa943a611beef597d9e29924b681c12fe246e012cd767c324ec8091"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "P",
+      "metrics_sha256": "0723c265de4006a509cffe2ecba909d67a27c4c50f91b9c9c3fbd977cda0e90f"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "T",
+      "metrics_sha256": "9b74fc4d6307ddf6b0e72330d4eb254bca45d0fc09fe64e4b397a394bacb9e00"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "T0",
+      "metrics_sha256": "2029470a5a7091bc242af086d53108766004c99ab190bf9e67ef5ba4e8ec09c8"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "T1",
+      "metrics_sha256": "805e62c12aef7628cbb8d1483915ddfdc0b35880928d3f5036dacb3c15dd856c"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "T2",
+      "metrics_sha256": "600b755626170ef40548950652ee14779b224bc27d8fed171748fcae89b61813"
+    }
+  ]
+}

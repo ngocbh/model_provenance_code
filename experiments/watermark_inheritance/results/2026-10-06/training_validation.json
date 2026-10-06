@@ -1,0 +1,125 @@
+{
+  "verified_utc": "2026-10-06T04:02:09.946200+00:00",
+  "training_stages": 9,
+  "epoch_checkpoints": 27,
+  "complete": true,
+  "checks": "Locked configs, actual data hashes, overlap manifest, correct B/P initialization paths, fresh stage start, 3 epochs with full row coverage, exact step counts, finite losses, saved weight shards and tokenizer. Prediction jobs separately validate checkpoint loading.",
+  "run_randomness": [
+    {
+      "prompt_seed": 1729,
+      "seed": 10301,
+      "watermark_key": 101
+    },
+    {
+      "prompt_seed": 1729,
+      "seed": 11301,
+      "watermark_key": 203
+    },
+    {
+      "prompt_seed": 1729,
+      "seed": 12301,
+      "watermark_key": 307
+    }
+  ],
+  "records": [
+    {
+      "run": "run_00",
+      "stage": "parent",
+      "rows_per_epoch": 10000,
+      "epochs": 3,
+      "optimizer_steps": 939,
+      "source": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/.cache/watermark/pythia-1b",
+      "config_sha256": "59edad03ccc72558ae8ee363744c0d02eff3c9d5bfc681f322d91045ea03b1b8",
+      "data_sha256": "c7f13a590a51601de421ebf81c0af319e5fbfd53e6785c62579364573219c404",
+      "final_train_loss": 1.5135054422311898
+    },
+    {
+      "run": "run_00",
+      "stage": "target",
+      "rows_per_epoch": 15011,
+      "epochs": 3,
+      "optimizer_steps": 1410,
+      "source": "artifacts/watermark_inheritance/run_00/checkpoints/parent",
+      "config_sha256": "59edad03ccc72558ae8ee363744c0d02eff3c9d5bfc681f322d91045ea03b1b8",
+      "data_sha256": "b6239e8e4fbdc94fb9966bdfeb29fd03ef02e8a8734bffb0aa7b1bd3ec5ecbb4",
+      "final_train_loss": 1.3117166827009092
+    },
+    {
+      "run": "run_00",
+      "stage": "control",
+      "rows_per_epoch": 15011,
+      "epochs": 3,
+      "optimizer_steps": 1410,
+      "source": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/.cache/watermark/pythia-1b",
+      "config_sha256": "59edad03ccc72558ae8ee363744c0d02eff3c9d5bfc681f322d91045ea03b1b8",
+      "data_sha256": "b6239e8e4fbdc94fb9966bdfeb29fd03ef02e8a8734bffb0aa7b1bd3ec5ecbb4",
+      "final_train_loss": 1.3049488017526671
+    },
+    {
+      "run": "run_01",
+      "stage": "parent",
+      "rows_per_epoch": 10000,
+      "epochs": 3,
+      "optimizer_steps": 939,
+      "source": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/.cache/watermark/pythia-1b",
+      "config_sha256": "cd691f80712966aa4d60dfc90a8e845c45a8071b0e5b0106c512044014ec71c9",
+      "data_sha256": "0f52d6ee1170c5147fc85680a8ba1f136a21cda78ea6fb74a5f7f8c646cc8c75",
+      "final_train_loss": 1.512599033972136
+    },
+    {
+      "run": "run_01",
+      "stage": "target",
+      "rows_per_epoch": 15010,
+      "epochs": 3,
+      "optimizer_steps": 1410,
+      "source": "artifacts/watermark_inheritance/run_01/checkpoints/parent",
+      "config_sha256": "cd691f80712966aa4d60dfc90a8e845c45a8071b0e5b0106c512044014ec71c9",
+      "data_sha256": "e1c7f9ae295c637b580e5750e51e405c85919f4e3d097453c3464fde9dddbb27",
+      "final_train_loss": 1.3092715202116212
+    },
+    {
+      "run": "run_01",
+      "stage": "control",
+      "rows_per_epoch": 15010,
+      "epochs": 3,
+      "optimizer_steps": 1410,
+      "source": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/.cache/watermark/pythia-1b",
+      "config_sha256": "cd691f80712966aa4d60dfc90a8e845c45a8071b0e5b0106c512044014ec71c9",
+      "data_sha256": "e1c7f9ae295c637b580e5750e51e405c85919f4e3d097453c3464fde9dddbb27",
+      "final_train_loss": 1.3030242046196705
+    },
+    {
+      "run": "run_02",
+      "stage": "parent",
+      "rows_per_epoch": 10000,
+      "epochs": 3,
+      "optimizer_steps": 939,
+      "source": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/.cache/watermark/pythia-1b",
+      "config_sha256": "ed429aa30a9ddf42336a3b20138989cbc9b7becf17db1ca768508f5eecc0cd25",
+      "data_sha256": "d4427cec69ebb1dbb03d5e8c74236bcba2c8b17ea270385ac0dd9ef97b330e4f",
+      "final_train_loss": 1.524184566235891
+    },
+    {
+      "run": "run_02",
+      "stage": "target",
+      "rows_per_epoch": 15011,
+      "epochs": 3,
+      "optimizer_steps": 1410,
+      "source": "artifacts/watermark_inheritance/run_02/checkpoints/parent",
+      "config_sha256": "ed429aa30a9ddf42336a3b20138989cbc9b7becf17db1ca768508f5eecc0cd25",
+      "data_sha256": "b6239e8e4fbdc94fb9966bdfeb29fd03ef02e8a8734bffb0aa7b1bd3ec5ecbb4",
+      "final_train_loss": 1.310041564601749
+    },
+    {
+      "run": "run_02",
+      "stage": "control",
+      "rows_per_epoch": 15011,
+      "epochs": 3,
+      "optimizer_steps": 1410,
+      "source": "/nfs/roberts/project/pi_zy286/nhb25/model_provenance_code/.cache/watermark/pythia-1b",
+      "config_sha256": "ed429aa30a9ddf42336a3b20138989cbc9b7becf17db1ca768508f5eecc0cd25",
+      "data_sha256": "b6239e8e4fbdc94fb9966bdfeb29fd03ef02e8a8734bffb0aa7b1bd3ec5ecbb4",
+      "final_train_loss": 1.3031456418675724
+    }
+  ]
+}
