@@ -1,14 +1,15 @@
 {
   "complete": false,
   "matched_steps": [
-    512
+    512,
+    1024
   ],
   "expected_checkpoints": 42,
-  "verified_utc": "2026-10-06T08:12:54.930587+00:00",
-  "checkpoints": 9,
-  "pair_scores": 90000,
-  "final_pair_decisions_per_detector": 72000,
-  "aggregate_tests": 36,
+  "verified_utc": "2026-10-06T08:20:51.317990+00:00",
+  "checkpoints": 12,
+  "pair_scores": 120000,
+  "final_pair_decisions_per_detector": 96000,
+  "aggregate_tests": 48,
   "checks": [
     "Single-pass exposure, checkpoint/model/config identity, and matched target/control prefixes",
     "Source/split/length alignment",
@@ -21,6 +22,11 @@
     "Artifact and scorer hashes"
   ],
   "records": [
+    {
+      "run": "run_00",
+      "checkpoint": "control_step1024",
+      "metrics_sha256": "cc1401a3569cbf3b01d36f78c0def5f8b081a13423c8e897877dc0d5a6c1a591"
+    },
     {
       "run": "run_00",
       "checkpoint": "control_step512",
@@ -38,6 +44,11 @@
     },
     {
       "run": "run_01",
+      "checkpoint": "control_step1024",
+      "metrics_sha256": "cc0f920712577d5b749f34ffd93ad2e786a816ad35dcfc7eeb472eed276dfbc9"
+    },
+    {
+      "run": "run_01",
       "checkpoint": "control_step512",
       "metrics_sha256": "0727b8575a08e282a8ed00016596a33792821d68bb7280922706b839f097fa65"
     },
@@ -50,6 +61,11 @@
       "run": "run_01",
       "checkpoint": "target_step512",
       "metrics_sha256": "aaa97340b696a4411576784a169acd5305203ccc7ad76507f545572b1cb1aaec"
+    },
+    {
+      "run": "run_02",
+      "checkpoint": "control_step1024",
+      "metrics_sha256": "0985d66b8314617f44d50f39e5e0ff25eb6ef70da20e7fac78ea0bc04e609397"
     },
     {
       "run": "run_02",
