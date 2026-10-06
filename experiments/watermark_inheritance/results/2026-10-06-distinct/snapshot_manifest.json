@@ -1,21 +1,22 @@
 {
-  "snapshot_utc": "2026-10-06T08:35:03.304341+00:00",
+  "snapshot_utc": "2026-10-06T08:49:02.023984+00:00",
   "gpu_job_id": "28460216",
   "all_scheduled_audits_complete": false,
-  "completed_checkpoint_audits": 15,
+  "completed_checkpoint_audits": 18,
   "planned_checkpoint_audits": 42,
   "matched_steps": [
     512,
-    1024
+    1024,
+    2048
   ],
   "files_sha256": {
-    "curve.csv": "a50164dd060b4d4bd4890de704ea511f00b57b3ddf2565a439685d941c03dbba",
-    "curve.json": "0c47c689c165e65aac5081d33168aa587a1ebf50067f7101c6886475ed1c8f04",
-    "curve.png": "d9424d0cb0ec5428ffcfff907c6a03ce545de0dd16d6682d31ce0af4fcc424f7",
-    "curve.pdf": "33fe3fec2ce244e883a190810486c49b7334682932af992818ea095a0ffb0eb8",
-    "advantage_vs_steps.png": "f5a06c612c39bf134204e877ba66fab4ebb91ffb8145f7c7d36b8114249a64bd",
-    "advantage_vs_steps.pdf": "b8b01d76106f3eae3a4ed076423f86e923f8f33147615fdb85223110fef9f8ca",
-    "curve_scoring_validation.json": "64824e84fb6cc65171d865712ca8140a07e28f9d7c732017182c185054ec59e6"
+    "curve.csv": "af28b5a5ca7b957aecf7e97e1ced24a9ce054762548c980d2c8a5e873d99d6af",
+    "curve.json": "ea32bb2c3f76470d55004eb767263256960eb4992e7421582d10ec5cd34672f3",
+    "curve.png": "d49f4dabc6188340e74ff434c0a35579b606f0fd09a7f16ea6293c21153a6c4c",
+    "curve.pdf": "3a805b22a11b8abeffb3ab026d6e4ee5c1e898b495e1c7c150648e916efb54f6",
+    "advantage_vs_steps.png": "b05472baedfc03e598e4821c531fdc318146647891bc9f33319470402057dd59",
+    "advantage_vs_steps.pdf": "733796b5585bea76fd1f9a08e16c0ebff3a0c6f81e868811777562f32188c46a",
+    "curve_scoring_validation.json": "9ce38d2402bc54161012ca0871feb23d942f86ff582447fb8b7e7dbb1ce01c3f"
   },
   "checks": [
     "CSV and JSON rows agree exactly",
